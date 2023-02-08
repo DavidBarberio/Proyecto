@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Intermodular</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                crossorigin="anonymous">
+</head>
+
+<body onload="start(), cartas()">
+        <div id="myModal" class="modal">
+                <div class="modal-content">
+                        <div class="navegador">
+                                <div class="sign"><i class="bi bi-person" style="font-size: 25px;"></i>
+                                        <input type="button" value="Sign in" class="btn-sign" onclick="sign()">
+                                </div>
+                                <div class="register">
+                                        <i class="bi bi-person-plus" style="font-size: 25px;"></i>
+                                        <input type="button" value="Register" class="btn-register" onclick="registro()">
+                                </div>
+                        </div>
+
+                        <hr>
+
+                        <form class="formulario-sign">
+                                <i class="bi bi-envelope" style="font-size: 25px;"></i>
+                                <label for="email">Email:</label>
+                                <input type="text" id="email-sign" name="email" autofocus><br>
+
+                                <i class="bi bi-lock" style="font-size: 25px;"></i>
+                                <label for="contraseña">Password:</label>
+                                <input type="password" id="contraseña-sign" name="contraseña">
+
+                                <div id="message-sign"></div>
+                        </form>
+
+                        <form class="formulario-register" style="display: none;">
+                                <i class="bi bi-person-circle" style="font-size: 25px;"></i>
+                                <label for="user">User:</label>
+                                <input type="text" id="user" name="user"><br>
+
+                                <i class="bi bi-envelope" style="font-size: 25px;"></i>
+                                <label for="email">Email:</label>
+                                <input type="text" id="email-register" name="email"><br>
+
+                                <i class="bi bi-lock" style="font-size: 25px;"></i>
+                                <label for="contraseña">Password:</label>
+                                <input type="password" id="contraseña-register" name="contraseña">
+
+                                <div id="message-register"></div>
+                        </form>
+
+                        <hr>
+
+                        <input type="submit" value="login" class="btn-formulario" id="btn-login" form="formulario-sign"
+                                onclick="logincheck()">
+                        <input type="submit" value="sign up" class="btn-formulario" id="btn-signup"
+                                form="formulario-register" style="display: none;" onclick="registercheck()">
+                </div>
+
+        </div>
+
+        <img src="Imagenes/logout.png" class="logout" onclick="logoutcheck()">
+
+        <div class="container">
+
+                <img src="Imagenes/ibex35.png" class="ibex">
+
+                <div class="table-responsive-lg" id="tabla" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <table class="table">
+                                <tbody>
+                                        <tr>
+                                                <td><img src="Imagenes/inditex.png" alt="inditex" id="inditex"
+                                                                width="200px" draggable="true"
+                                                                ondragstart="drag(event), safe(this.id)"></td>
+                                                <td><img src="Imagenes/santander.png" alt="santander" id="santander"
+                                                                width="200px" draggable="true"
+                                                                ondragstart="drag(event), safe(this.id)"></td>
+                                                <td><img src="Imagenes/bbva.png" alt="bbva" id="bbva" width="200px"
+                                                                draggable="true"
+                                                                ondragstart="drag(event), safe(this.id)"></td>
+                                                <td><img src="Imagenes/naturgy.png" alt="naturgy" id="naturgy"
+                                                                width="200px" draggable="true"
+                                                                ondragstart="drag(event), safe(this.id)"></td>
+                                                <td><img src="Imagenes/cellnex.png" alt="cellnex" id="cellnex"
+                                                                width="200px" draggable="true"
+                                                                ondragstart="drag(event), safe(this.id)"></td>
+                                        </tr>
+                                        <tr>
+                                                <td><img src="Imagenes/caixabank.png" alt="caixabank" id="caixabank"
+                                                                width="200px" draggable="true"
+                                                                ondragstart="drag(event), safe(this.id)"></td>
+                                                <td><img src="Imagenes/telefonica.png" alt="telefonica" id="telefonica"
+                                                                width="200px" draggable="true"
+                                                                ondragstart="drag(event), safe(this.id)"></td>
+                                                <td><img src="Imagenes/repsol.png" alt="repsol" id="repsol"
+                                                                width="200px" draggable="true"
+                                                                ondragstart="drag(event), safe(this.id)"></td>
+                                                <td><img src="Imagenes/ferrovial.png" alt="ferrovial" id="ferrovial"
+                                                                width="200px" draggable="true"
+                                                                ondragstart="drag(event), safe(this.id)"></td>
+                                                <td><img src="Imagenes/iberdrola.png" alt="iberdrola" id="iberdrola"
+                                                                width="200px" draggable="true"
+                                                                ondragstart="drag(event), safe(this.id)"></td>
+                                        </tr>
+                                </tbody>
+                        </table>
+                </div>
+
+                <div class="col-12 text-right">
+                        <div class="box" id="caja" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="safebtn"
+                        onclick="empresas(), ocultar()">Guardar</button>
+
+                <div class="card-columns">
+
+                </div>
+
+                <img src="Imagenes/atras.png" id="backbtn" onclick="mostrar()">
+
+                
+                <div class="imgChart">
+                        <img src="Imagenes/chart.png" id="chartbtn" style="width: 75px; cursor: pointer;">
+                </div>
+
+                
+                <div id="myModalChart" class="modal-chart">
+
+                        
+                        <div class="modal-content-chart">
+                                <span class="close">&times;</span>
+                                <form style="text-align: center;">
+                                        <label for="empresa">Empresa</label>
+                                        <select name="empresas" id="emp">
+                                          <option value="repsol">repsol</option>
+                                          <option value="iberdrola">iberdrola</option>
+                                          <option value="ferrovial">ferrovial</option>
+                                          <option value="santander">santander</option>
+                                          <option value="inditex">inditex</option>
+                                          <option value="naturgy">naturgy</option>
+                                          <option value="telefonica">telefonica</option>
+                                          <option value="cellnex">cellnex</option>
+                                          <option value="bbva">bbva</option>
+                                          <option value="caixabank">caixabank</option>
+                                        </select>
+
+                                        <label for="periodicidad">Periodicidad</label>
+                                        <select name="periodic" id="per">
+                                          <option value="year">year</option>
+                                          <option value="month">month</option>
+                                          <option value="week">week</option>
+                                        </select>
+                                    
+                                        <input type="button" value="mostrar" onclick="tabla()"/>
+                                </form>
+
+                                <figure class="highcharts-figure">
+                                      <div id="container-chart">
+                                    
+                                      </div>
+                                </figure>
+                        </div>
+
+                </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <script src="script.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/series-label.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+</body>
+
+</html>

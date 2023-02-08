@@ -1,0 +1,85 @@
+version: "3.7"
+
+services:
+    db:
+        image: mysql:5.7
+        container_name: db
+        environment:
+            MYSQL_ROOT_PASSWORD: stocks
+            MYSQL_DATABASE: stocks
+            MYSQL_USER: stocks
+            MYSQL_PASSWORD: stocks
+        ports:
+            - "3306:3306"
+        volumes:
+            - dbdata:/var/lib/mysql
+        networks:
+            - david
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: pma
+        links:
+            - db
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            PMA_ARBITRARY: 1
+        restart: always
+        ports:
+            - 8081:80
+        networks:
+            - david
+    api1:
+        build: ./api
+        
+        volumes:
+            - ./api:/src/app
+        depends_on:
+            - db
+        networks:
+            - david
+        ports:
+            - "8000:80"
+    api2:
+        build: ./Api
+        
+        depends_on:
+            - db
+        networks:
+            - david
+        ports:
+            - "8001:80"
+    frontend:
+        build: ./frontend
+        volumes:
+            - ./frontend:/var/www/html
+        networks:
+            - david
+        ports:
+            - "81:80"
+    fake:
+        build: ./fake
+        volumes:
+            - ./fake:/app
+        depends_on:
+            - db
+        networks:
+            - david
+    proxy:
+        image: nginx
+        ports:
+            - "80:80"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+        networks:
+            - david
+        depends_on:
+            - api1
+            - api2
+            - frontend
+volumes:
+    dbdata:
+
+networks:
+    david:
+        driver: bridge
